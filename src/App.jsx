@@ -7,13 +7,32 @@ class App extends React.Component {
 
     this.state = {
       pokemonId: 0,
-      pokemonName: ""
+      pokemonName: "",
+      pokemonSpriteUrl: ""
     }
+
+    this.getRandomPokemon = this.getRandomPokemon.bind(this);
   }
 
   async componentDidMount(){
     console.log("Component mounted.");
 
+    this.getRandomPokemon();
+    
+  }
+
+  componentDidUpdate(){
+    console.log(this.state);
+  }
+
+  componentWillUnmount(){
+    console.log("API stuff is all done, goodbye!");
+  }
+
+  // exampleFunctionInClass () {
+  // }
+
+  async getRandomPokemon () {
     let randomPokemonId = Math.floor(Math.random() * 1025) + 1;
     console.log("Random Pokemon ID to get is: " + randomPokemonId);
 
@@ -29,23 +48,25 @@ class App extends React.Component {
         // pokemonId: previousState.pokemonId,
         // And then overwrite the specific bits that we want to update
         pokemonName: data.name,
-        pokemonId: data.id
+        pokemonId: data.id,
+        pokemonSpriteUrl: data.sprites.other.home.front_default
       }
     });
   }
 
-  componentDidUpdate(){
-    console.log(this.state);
-  }
 
-  componentWillUnmount(){
-    console.log("API stuff is all done, goodbye!");
-  }
+
 
   render() {
     return (
       <>
         <h1>This is a class component!</h1>
+
+        {/* <button onClick={(event) => {this.getRandomPokemon(event)}} > */}
+        {/* <button onClick={() => {this.getRandomPokemon()}} > */}
+        <button onClick={this.getRandomPokemon} >
+          Get a random Pokemon
+        </button>
 
         {this.state.pokemonName.length > 0 && 
         <h1>
@@ -53,6 +74,11 @@ class App extends React.Component {
         </h1>
         }
 
+        
+        {this.state.pokemonSpriteUrl.length > 0 &&
+          <img src={this.state.pokemonSpriteUrl} /> 
+        }
+        
 
       </>
     )
