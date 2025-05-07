@@ -8,7 +8,8 @@ class App extends React.Component {
     this.state = {
       pokemonId: 0,
       pokemonName: "",
-      pokemonSpriteUrl: ""
+      pokemonSpriteUrl: "",
+      pokemonSearchTerm: ""
     }
 
     this.getRandomPokemon = this.getRandomPokemon.bind(this);
@@ -36,7 +37,13 @@ class App extends React.Component {
     let randomPokemonId = Math.floor(Math.random() * 1025) + 1;
     console.log("Random Pokemon ID to get is: " + randomPokemonId);
 
-    let response = await fetch("https://pokeapi.co/api/v2/pokemon/" + randomPokemonId);
+   this.getSpecificPokemon(randomPokemonId);
+  }
+
+
+  async getSpecificPokemon(targetPokemonValue){
+
+    let response = await fetch("https://pokeapi.co/api/v2/pokemon/" + targetPokemonValue);
     let data = await response.json();
 
     console.log(data);
@@ -67,6 +74,27 @@ class App extends React.Component {
         <button onClick={this.getRandomPokemon} >
           Get a random Pokemon
         </button>
+
+        <section>
+          <label htmlFor="pokemonNameInput">Pokemon to search for:</label>
+          <input 
+            type="search" 
+            name="pokemonNameInput" 
+            id="pokemonNameInput" 
+            value={this.state.pokemonSearchTerm} 
+            onChange={(event) => {
+              this.setState((previousState) => {
+                return {
+                  ...previousState,
+                  pokemonSearchTerm: event.target.value
+                }
+              })
+            }}
+          />
+          <button onClick={() => this.getSpecificPokemon(this.state.pokemonSearchTerm)}>
+            Search!
+          </button>
+        </section>
 
         {this.state.pokemonName.length > 0 && 
         <h1>
