@@ -78,7 +78,7 @@ class App extends React.Component {
         <section>
           <label htmlFor="pokemonNameInput">Pokemon to search for:</label>
           <input 
-            type="search" 
+            type="text" 
             name="pokemonNameInput" 
             id="pokemonNameInput" 
             value={this.state.pokemonSearchTerm} 
@@ -89,6 +89,11 @@ class App extends React.Component {
                   pokemonSearchTerm: event.target.value
                 }
               })
+            }}
+            onKeyDown={(event) => {
+              if (event.key === "Enter") {
+                this.getSpecificPokemon(this.state.pokemonSearchTerm);
+              }
             }}
           />
           <button onClick={() => this.getSpecificPokemon(this.state.pokemonSearchTerm)}>
