@@ -28,9 +28,6 @@ export function PokemonSearcher(){
       getRandomPokemon();
     }
 
-
-    
-
     // Return inside useeffect is equivalent to componentWillUnmount
     // return (() => {
     //   console.log("Component is unmounting now.");
