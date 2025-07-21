@@ -1,44 +1,23 @@
 name: Build and Deploy
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-
-jobs:
-  build:
-
-    runs-on: ubuntu-latest
-    
-    steps:
-    - uses: actions/checkout@v4
-
-    - name: Build and Deploy React app to GitHub Pages
-      uses: omkartapale/react-deployment-gh-pages@v1.0.0
-=======
-=======
->>>>>>> Stashed changes
 on:
   push:
     branches:
       - "main" # change to the branch you wish to deploy from
+
 permissions:
   contents: read
   pages: write
   id-token: write
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{  steps.build-publish.outputs.page_url }}
     steps:
     - id: build-publish
       uses: bitovi/github-actions-react-to-github-pages@v1.2.4
       with:
-<<<<<<< Updated upstream
         path: dist # change to your build folder
->>>>>>> Stashed changes
-=======
-        path: dist # change to your build folder
->>>>>>> Stashed changes
